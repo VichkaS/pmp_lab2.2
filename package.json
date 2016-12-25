@@ -18,6 +18,7 @@
   "homepage": "https://github.com/VichkaS/pmp_lab2.2#readme",
   "dependencies": {
     "angular": "^1.6.1",
+    "angular-yandex-map": "^1.0.4",
     "jquery": "^3.1.1"
   }
 }

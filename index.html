@@ -2,13 +2,63 @@
 <html ng-app="YandexMapApp">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <link rel="stylesheet" href="css/index.css">
       <title>Lab2.2</title>  
+      
+
     </head>
     <body ng-controller="mapController">
+        <div id="map">
+            <ya-map ya-zoom="10" ya-center="{{ center }}" ya-before-init="beforeInit()">
+                <ya-geo-object ng-repeat="o in geoObjects" ya-source="o"></ya-geo-object>
+            </ya-map>
+        </div>
+        
+        <div>
+            <div class="map_and_list ">
+                <div id="map"></div>
+                <div id="listPlacemark" class="listPlacemark">
+                    <p>Список меток</p>
+                    <div id="marks"></div>
+                </div>
+            </div>
+            <div class="drop_and_forms">
+                <div my-var="listMark" dropzone >Для загрузки, перетащите файл сюда.</div>
+                <div class="forms">
+                    <form class="formAddMark" onsubmit="return saveMark()">
+                        <p>Добавить метку</p>
+                        <p>
+                            Название: <input id="mark_name" type="text" name="name" required/>
+                        </p>
+                        <p>
+                            Широта: <input id="val_lat" type="number" min="-180.0" max="180.0" step="any" name="lat" value="56.634761" required/>
+                        </p>
+                        <p>
+                            Долгота: <input id="val_lon" type="number" name="lon" min="-180.0" step="any" max="180.0" value="47.892854" required/>
+                        </p>
+                        <input id="btn_save_mark" type="submit" value="Сохранить" /> 
+                    </form>
+                    <form class="formRadius" onsubmit="return saveRadius();">
+                        <p>Указать радиус видимости меток:</p>
+                        <input id="val_radius" type="number" name="radius" min="1000" max="10000000" />
+                        <input id="btn_save_radius" type="submit" value="Сохранить" />  
+                    </form>
+                </div>
+            </div>       
+        </div>
+
+        
         <script src="node_modules/angular/angular.js"></script> 
-        <!--script src="node_modules/jquery/dist/jquery.js"></script-->
+        
+        <script src="node_modules/jquery/dist/jquery.js"></script>
         <script src="js/services/localStorageService.js"></script>
+        <script src="node_modules/angular-yandex-map/ya-map-2.1.min.js"></script>
         <script src="js/mainjs.js"></script>
         <script src="js/controllers/mapController.js"></script>
+        <script src="js/obj/coordinatesGeoMark.js"></script>
+        <script src="js/obj/geoMark.js"></script>
+        <script src="js/obj/uploaderJson.js"></script>
+        
+        
     </body>
 </html>
