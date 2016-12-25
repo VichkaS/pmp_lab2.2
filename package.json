@@ -1,0 +1,23 @@
+{
+  "name": "pmp_lab2.2",
+  "version": "1.0.0",
+  "description": "Рефакторинг лабораторной 2.1, чтобы использовался фреймворк AngularJS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VichkaS/pmp_lab2.2.git"
+  },
+  "author": "viktoria.gavrilenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VichkaS/pmp_lab2.2/issues"
+  },
+  "homepage": "https://github.com/VichkaS/pmp_lab2.2#readme",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "jquery": "^3.1.1"
+  }
+}

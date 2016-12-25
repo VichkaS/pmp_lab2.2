@@ -1,0 +1,1 @@
+angular.module('YandexMapApp').controller("mapController", ['$scope', 'localStorageService', function ($scope, localStorageService) {  }]);
