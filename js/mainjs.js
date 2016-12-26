@@ -4,5 +4,3 @@ App.config(function (localStorageServiceProvider) {
   localStorageServiceProvider
     .setPrefix('ls');
 });
-
-//Dropzone.autoDiscover = false;

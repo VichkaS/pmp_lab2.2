@@ -3,7 +3,6 @@ angular.module('YandexMapApp').directive("dropzone", function() {
         restrict : 'A',
         scope: true,
         link: function (scope, elem) {
-            console.log(scope);
             elem.on('dragover', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -12,7 +11,7 @@ angular.module('YandexMapApp').directive("dropzone", function() {
                 e.preventDefault();
                 e.stopPropagation();
             });
-            console.log(scope.listMark);
+            
             elem.on('drop', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -30,29 +29,21 @@ angular.module('YandexMapApp').directive("dropzone", function() {
                                     listJsonObj[i].coordinates, 
                                     listJsonObj[i].name, 
                                     true );
-                                
-                                scope.listMark.push(myGeoObj);
-                                myPlacemark = new ymaps.Placemark([scope.listMark[i].coordinates.latitude, scope.listMark[i].coordinates.longitude], 
-                                                                    { balloonContent: scope.listMark[i].name });
-                                console.log(myPlacemark);
-                                scope.myMap.geoObjects.add(myPlacemark);
-                                //objlocalStorage.saveGeoMark(myGeoObj);
+                                if (!scope.findMark(myGeoObj)) {
+                                    scope.listMark.push(myGeoObj);
+                                    myPlacemark = new ymaps.Placemark([scope.listMark[i].coordinates.latitude, scope.listMark[i].coordinates.longitude], 
+                                                                        { balloonContent: scope.listMark[i].name });
+                                    scope.myMap.geoObjects.add(myPlacemark);
+                                    console.log(scope.myMap.geoObjects);
+                                    scope.$apply();
+                                    //objlocalStorage.saveGeoMark(myGeoObj);
+                                }
                             };
                         };
                     })(file);
                 reader.readAsText(file, "utf-8");
-                console.log(scope.listMark);
                 return false;
             });
         }
     }
 });
-
-/*function checkMark(mark) {
-    for ( var i = 0; i < listMark.length; i++ ) {
-        if (mark.coordinates.latitude == listMark[i].coordinates.latitude && mark.coordinates.longitude == listMark[i].coordinates.longitude) {
-            return false;
-        }
-    }
-    return true;
-};*/
