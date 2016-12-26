@@ -3,40 +3,40 @@
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <link rel="stylesheet" href="css/index.css">
-      <title>Lab2.2</title>  
-      
-
+      <title>Lab2.2</title>   
     </head>
-    <body ng-controller="mapController">
-        <div id="map">
-            <ya-map ya-zoom="10" ya-center="{{ center }}" ya-before-init="beforeInit()">
-                <ya-geo-object ng-repeat="o in geoObjects" ya-source="o"></ya-geo-object>
-            </ya-map>
-        </div>
-        
+    <body ng-controller="mapController">      
         <div>
             <div class="map_and_list ">
-                <div id="map"></div>
+                <div id="map">
+                    <ya-map ya-zoom="12" ya-center="{{ center }}" ya-after-init="afterMapInit($target)" ya-before-init="beforeInit()"></ya-map>
+                </div>
                 <div id="listPlacemark" class="listPlacemark">
                     <p>Список меток</p>
-                    <div id="marks"></div>
+                    <div>
+                        <div class="item_group" ng-repeat="mark in listMark">
+                            {{mark.name}}
+                            <input class='button' id='btn_delete' type='submit' value='Удалить' ng-click="deletePlacemarke(mark.id)"/>
+                            <input class='button' id='btn_hide' type='submit' value='Скрыть/Показать' ng-click="hideOrShowPlacemarke(mark.id)"/>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="drop_and_forms">
-                <div my-var="listMark" dropzone >Для загрузки, перетащите файл сюда.</div>
+                <div dropzone>Для загрузки, перетащите файл сюда.</div>
                 <div class="forms">
-                    <form class="formAddMark" onsubmit="return saveMark()">
+                    <form class="formAddMark">
                         <p>Добавить метку</p>
                         <p>
-                            Название: <input id="mark_name" type="text" name="name" required/>
+                            Название: <input id="mark_name" type="text" ng-model="newNameMark" name="newNameMark" required/>
                         </p>
                         <p>
-                            Широта: <input id="val_lat" type="number" min="-180.0" max="180.0" step="any" name="lat" value="56.634761" required/>
+                            Широта: <input id="val_lat" type="number" min="-180.0" max="180.0" step="any" ng-model="newLatMark" name="newLatMark" value="56.634761" required/>
                         </p>
                         <p>
-                            Долгота: <input id="val_lon" type="number" name="lon" min="-180.0" step="any" max="180.0" value="47.892854" required/>
+                            Долгота: <input id="val_lon" type="number" ng-model="newLonMark" name="newLonMark" min="-180.0" step="any" max="180.0" value="47.892854" required/>
                         </p>
-                        <input id="btn_save_mark" type="submit" value="Сохранить" /> 
+                        <input ng-click="saveMark($event)" id="btn_save_mark" type="button" value="Сохранить" /> 
                     </form>
                     <form class="formRadius" onsubmit="return saveRadius();">
                         <p>Указать радиус видимости меток:</p>
@@ -46,10 +46,8 @@
                 </div>
             </div>       
         </div>
-
         
         <script src="node_modules/angular/angular.js"></script> 
-        
         <script src="node_modules/jquery/dist/jquery.js"></script>
         <script src="js/services/localStorageService.js"></script>
         <script src="node_modules/angular-yandex-map/ya-map-2.1.min.js"></script>
