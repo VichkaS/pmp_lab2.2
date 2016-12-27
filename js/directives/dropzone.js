@@ -31,7 +31,7 @@ angular.module('YandexMapApp').directive("dropzone", function() {
                                     true );
                                 if (!scope.findMark(myGeoObj)) {
                                     scope.listMark.push(myGeoObj);
-                                    myPlacemark = new ymaps.Placemark([scope.listMark[i].coordinates.latitude, scope.listMark[i].coordinates.longitude], 
+                                    myPlacemark = new ymaps.Placemark([scope.listMark[i].coordinates.longitude, scope.listMark[i].coordinates.latitude], 
                                                                         { balloonContent: scope.listMark[i].name });
                                     scope.myMap.geoObjects.add(myPlacemark);
                                     console.log(scope.myMap.geoObjects);

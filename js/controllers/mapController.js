@@ -3,7 +3,6 @@ angular.module('YandexMapApp').controller("mapController", ['$scope', 'localStor
     $scope.newNameMark = "Новая метка";
     $scope.newLatMark = 47.892854;
     $scope.newLonMark = 56.634761;
-    $scope.center = [47.892854, 56.634761];
     $scope.myMap;
     var myCircle;
     
@@ -16,18 +15,17 @@ angular.module('YandexMapApp').controller("mapController", ['$scope', 'localStor
     $scope.afterMapInit = function(map) {
         $scope.myMap = map;
         
-        console.log($scope.center);
         // радиус видимости меток
-        myCircle = new ymaps.Circle($scope.center, $scope.radius, null, { visible: false });
+        myCircle = new ymaps.Circle([[47.892854, 56.634761], $scope.radius], null, { visible: true });
         $scope.myMap.geoObjects.add(myCircle);
         
         // добавляем ранее сохраненные метки
         for (var i = 0; i < $scope.listMark.length; i++){
-            myPlacemark = new ymaps.Placemark([$scope.listMark[i].coordinates.latitude, $scope.listMark[i].coordinates.longitude], 
-                                              { balloonContent: $scope.listMark[i].name });
+            myPlacemark = new ymaps.Placemark([$scope.listMark[i].coordinates.longitude, $scope.listMark[i].coordinates.latitude], 
+                                              { balloonContent: $scope.listMark[i].name});
             $scope.myMap.geoObjects.add(myPlacemark);
         };
-        //$scope.markInRadius();
+        $scope.markInRadius();
     };
     
     $scope.$watch('listMark', function () {
@@ -48,15 +46,14 @@ angular.module('YandexMapApp').controller("mapController", ['$scope', 'localStor
                 { preset: 'islands#greenDotIconWithCaption' });
             $scope.myMap.geoObjects.add(myPlace);
             $scope.center = result.geoObjects.position;
-            
         });
     };
     
     $scope.saveMark = function(e) {
         var mark = new geoMark(
             Math.random().toString(16).slice(2),
-            { "latitude": $scope.newLatMark,
-              "longitude": $scope.newLonMark },
+            { "latitude": $scope.newLonMark,
+              "longitude": $scope.newLatMark },
             $scope.newNameMark,
             true
         );
@@ -84,7 +81,7 @@ angular.module('YandexMapApp').controller("mapController", ['$scope', 'localStor
             if ( $scope.listMark[i].id == id ) {
                 ymaps.geoQuery($scope.myMap.geoObjects).each(function(mark) {
                     coords = mark.geometry.getCoordinates();
-                    if (coords[0] == $scope.listMark[i].coordinates.latitude && coords[1] == $scope.listMark[i].coordinates.longitude) {
+                    if (coords[0] == $scope.listMark[i].coordinates.longitude && coords[1] == $scope.listMark[i].coordinates.latitude) {
                         $scope.listMark[i].visible = !$scope.listMark[i].visible;
                         mark.options.set('visible', $scope.listMark[i].visible);                    
                     }
@@ -95,10 +92,10 @@ angular.module('YandexMapApp').controller("mapController", ['$scope', 'localStor
 
     $scope.deletePlacemarke = function(id) {
         for ( var i = 0; i < $scope.listMark.length; i++ ) {
-            if ( $scope.listMark[i].id == id ) {          
+            if ( $scope.listMark[i].id == id ) {
                 $scope.myMap.geoObjects.each(function(mark) {
                     coords = mark.geometry.getCoordinates();
-                    if (coords[0] == $scope.listMark[i].coordinates.latitude && coords[1] == $scope.listMark[i].coordinates.longitude) {
+                    if (coords[0] == $scope.listMark[i].coordinates.longitude && coords[1] == $scope.listMark[i].coordinates.latitude) {
                         $scope.myMap.geoObjects.remove(mark);
                         $scope.listMark.splice(i, 1);
                     }
@@ -109,14 +106,11 @@ angular.module('YandexMapApp').controller("mapController", ['$scope', 'localStor
     };
     
     $scope.saveRadius = function() {
-        console.log('1: ', myCircle);
         myCircle.geometry.setRadius($scope.radius);
-        console.log('2: ', myCircle)
         $scope.markInRadius();
     };
 
     $scope.markInRadius = function() {
-        console.log('circle: ', myCircle);
         var objectsInsideCircle = ymaps.geoQuery($scope.myMap.geoObjects).searchIntersect(myCircle);
         objectsInsideCircle.setOptions('visible', true);
         ymaps.geoQuery($scope.myMap.geoObjects).remove(objectsInsideCircle).setOptions('visible', false);
