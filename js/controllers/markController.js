@@ -4,6 +4,7 @@ angular.module('YandexMapApp').controller("markController", ['$scope', function 
     $scope.newLatMark = 47.892854;
     $scope.newLonMark = 56.634761;
     
+    $scope.radius = 10000;
     $scope.listMark = [];
     
     $scope.saveMark = function() {

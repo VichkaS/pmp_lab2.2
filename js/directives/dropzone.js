@@ -36,7 +36,6 @@ angular.module('YandexMapApp').directive("dropzone", function() {
                                     scope.myMap.geoObjects.add(myPlacemark);
                                     console.log(scope.myMap.geoObjects);
                                     scope.$apply();
-                                    //objlocalStorage.saveGeoMark(myGeoObj);
                                 }
                             };
                         };
