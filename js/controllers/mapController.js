@@ -49,7 +49,7 @@ angular.module('YandexMapApp').controller("mapController", ['$scope', 'localStor
         });
     };
     
-    $scope.saveMark = function(e) {
+    $scope.saveMark = function() {
         var mark = new geoMark(
             Math.random().toString(16).slice(2),
             { "latitude": $scope.newLonMark,
@@ -62,9 +62,10 @@ angular.module('YandexMapApp').controller("mapController", ['$scope', 'localStor
             $scope.myMap.geoObjects.add(
                 new ymaps.Placemark([$scope.newLatMark, $scope.newLonMark], { balloonContent: $scope.newNameMark })
             );
-            $scope.listMark.push(mark);
+            $scope.listMark.push(mark);  
         }
         $scope.markInRadius();
+        
     };
     
     $scope.findMark = function(mark) {

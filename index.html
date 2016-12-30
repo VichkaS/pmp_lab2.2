@@ -36,7 +36,7 @@
                         <p>
                             Долгота: <input id="val_lon" type="number" ng-model="newLonMark" name="newLonMark" min="-180.0" step="any" max="180.0" value="47.892854" required/>
                         </p>
-                        <input ng-click="saveMark($event)" id="btn_save_mark" type="button" value="Сохранить" /> 
+                        <input ng-click="saveMark()" id="btn_save_mark" type="button" value="Сохранить" /> 
                     </form>
                     <form class="formRadius">
                         <p>Указать радиус видимости меток:</p>
@@ -49,6 +49,8 @@
         
         <script src="node_modules/angular/angular.js"></script> 
         <script src="node_modules/jquery/dist/jquery.js"></script>
+        <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+        <script src="jasmineTests.js"></script>
         <script src="js/services/localStorageService.js"></script>
         <script src="node_modules/angular-yandex-map/ya-map-2.1.min.js"></script>
         <script src="js/main.js"></script>
@@ -57,5 +59,6 @@
         <script src="js/obj/geoMark.js"></script>
         <script src="js/directives/dropzone.js"></script>
         <script src="js/directives/contenteditable.js"></script>
+        <script src="js/test.js"></script>
     </body>
 </html>
